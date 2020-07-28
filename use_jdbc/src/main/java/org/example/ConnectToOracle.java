@@ -2,7 +2,7 @@ package org.example;
 
 import java.sql.*;
 
-public class TestOracleConnect {
+public class ConnectToOracle {
     public static void main(String[] args) {
         ResultSet rs = null;
         Statement stmt = null;
