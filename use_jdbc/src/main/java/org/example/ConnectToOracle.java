@@ -3,36 +3,34 @@ package org.example;
 import java.sql.*;
 
 public class ConnectToOracle {
-    public static void main(String[] args) {
-        ResultSet rs = null;
-        Statement stmt = null;
-        Connection conn = null;
+    Connection conn = null;
+
+    private void release() {
+        try {
+            if (conn != null) {
+                conn.close();
+                conn = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void run() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
             conn = DriverManager.getConnection(dbURL, "test", "test");
             System.out.println("connect success!");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    rs = null;
-                }
-                if (stmt != null) {
-                    stmt.close();
-                    stmt = null;
-                }
-                if (conn != null) {
-                    conn.close();
-                    conn = null;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            release();
         }
+    }
+
+    public static void main(String[] args) {
+        ConnectToOracle connectToOracle = new ConnectToOracle();
+        connectToOracle.run();
     }
 }
