@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  <servlet>
+    <servlet-name>CheckBox</servlet-name>
+    <servlet-class>org.example.learn_servlet.check_box</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckBox</servlet-name>
+    <url-pattern>/TestTomcat/CheckBox</url-pattern>
+  </servlet-mapping>
+</web-app>
