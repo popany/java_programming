@@ -17,7 +17,6 @@ public class AppUseH2
             StudentJDBCTemplate studentJDBCTemplate = (StudentJDBCTemplate)context.getBean("studentJDBCTemplate");
         
             System.out.println("------Records Creation--------" );
-            studentJDBCTemplate.create("Zara", 11);
             studentJDBCTemplate.create("Nuha", 2);
             studentJDBCTemplate.create("Ayan", 15);
 
