@@ -15,12 +15,6 @@ public class AppTestUseMybatis
     ArticleMapper articleMapper;
 
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
-    }
-
-    @Test
     public void whenRecordsInDatabase_shouldReturnArticleWithGivenId() {
         Article article = articleMapper.getArticle(1L);
  

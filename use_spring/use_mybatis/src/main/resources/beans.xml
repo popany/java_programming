@@ -17,7 +17,7 @@
     </bean>
     
     <bean id="articleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baeldung.mybatis.ArticleMapper" />
+        <property name="mapperInterface" value="org.example.ArticleMapper" />
         <property name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
 
