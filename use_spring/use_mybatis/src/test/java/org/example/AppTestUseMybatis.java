@@ -3,6 +3,9 @@ package org.example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/beans.xml")
@@ -22,9 +25,8 @@ public class AppTestUseMybatis
         Article article = articleMapper.getArticle(1L);
  
         assertNotNull(article);
-        assertThat((Object)article).isNotNull();
-        assertThat(article.getId()).isEqualTo(1L);
-        assertThat(article.getAuthor()).isEqualTo("Baeldung");
-        assertThat(article.getTitle()).isEqualTo("Working with MyBatis in Spring");
+        assertEquals((Long)1L, article.getId());
+        assertEquals("Baeldung", article.getAuthor());
+        assertEquals("Working with MyBatis in Spring", article.getTitle());
     }
 }
