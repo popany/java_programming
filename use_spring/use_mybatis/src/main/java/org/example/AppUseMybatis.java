@@ -2,10 +2,20 @@
 
 package org.example;
 
-public class AppUseMybatis 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+ public class AppUseMybatis 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml")) {
+            ArticleMapper articleMapper = (ArticleMapper)context.getBean("articleMapper");
+
+            Article article = articleMapper.getArticle(1L);
+            System.out.println("============================================");
+            System.out.println("id: " + article.getId());
+            System.out.println("title: " + article.getTitle());
+            System.out.println("author: " + article.getAuthor());
+            System.out.println("--------------------------------------------");
+        }
     }
 }
