@@ -1,11 +1,9 @@
+// https://www.tutorialspoint.com/spring/spring_dependency_injection.htm
+// https://www.qikegu.com/docs/1567
 package org.example;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * Hello world!
- *
- */
 public class AppDependencyInjectionXml 
 {
     public static void main( String[] args )
