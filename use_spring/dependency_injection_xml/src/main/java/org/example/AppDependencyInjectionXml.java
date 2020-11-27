@@ -13,8 +13,10 @@ public class AppDependencyInjectionXml
         try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml")) {
             Foo foo1 = (Foo) context.getBean("foo1");
             Foo foo2 = (Foo) context.getBean("foo2");
-            System.out.println(foo1.toString());
-            System.out.println(foo2.toString());
+            Foo foo3 = (Foo) context.getBean("foo3");
+            System.out.println("foo1 - " + foo1.toString());
+            System.out.println("foo2 - " + foo2.toString());
+            System.out.println("foo3 - " + foo3.toString());
         }
     }
 }
