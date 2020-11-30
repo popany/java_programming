@@ -13,7 +13,7 @@ public class AppAnnocationBasedConfiguration
     {
         try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml")) {
             Foo foo = (Foo) context.getBean("foo");
-            System.out.println("foo: " + foo.toString());
+            System.out.println("foo - " + foo.toString());
         }
     }
 }

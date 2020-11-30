@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 public class Foo {
 
+    @Autowired
     @Qualifier("bar1")
     Bar bar1;
     Bar bar2;
 
+    @Autowired
     @Qualifier("baz1")
     Baz baz1;
     Baz baz2;
@@ -20,6 +22,6 @@ public class Foo {
     }
 
     public String toString() {
-        return String.format("bar1: %s, bar2: %s, baz1: %s, baz2: %s", bar1.getInfo(), bar2.getInfo(), baz1.getInfo(), baz2.getInfo());
+        return String.format("Bar1: %s, Bar2: %s, Baz1: %s, Baz2: %s", bar1.getInfo(), bar2.getInfo(), baz1.getInfo(), baz2.getInfo());
     }
 }
