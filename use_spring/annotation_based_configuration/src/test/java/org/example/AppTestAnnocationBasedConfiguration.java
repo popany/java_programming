@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTestAnnocationConfig 
+public class AppTestAnnocationBasedConfiguration 
 {
     /**
      * Rigorous Test :-)

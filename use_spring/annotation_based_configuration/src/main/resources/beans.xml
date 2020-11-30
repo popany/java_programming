@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xsi:schemaLocation = "http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <bean id = "bar1" class = "org.example.Bar">
+        <property name = "info" value = "bar1"/>
+    </bean>
+
+    <bean id = "bar2" class = "org.example.Bar">
+        <property name = "info" value = "bar2"/>
+    </bean>
+
+    <bean id = "baz1" class = "org.example.Baz">
+        <property name = "info" value = "baz1"/>
+    </bean>
+
+    <bean id = "baz2" class = "org.example.Baz">
+        <property name = "info" value = "baz2"/>
+    </bean>
+
+    <bean id = "foo" class = "org.example.Foo"/>
+
+</beans>
