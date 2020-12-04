@@ -18,6 +18,10 @@ public class Foo {
     }
 
     void func5AfterReturning(Object obj) {
+        if (obj == null) {
+            System.out.println("after-returning: func5(), obj == null");
+            return;
+        }
         System.out.println("after-returning: func5(), return: " + obj.toString());
     }
 }

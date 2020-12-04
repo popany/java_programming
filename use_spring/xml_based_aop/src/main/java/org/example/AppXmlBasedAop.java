@@ -1,3 +1,7 @@
+// https://www.tutorialspoint.com/spring/aop_with_spring.htm
+// https://www.tutorialspoint.com/spring/schema_based_aop_appoach.htm
+// https://www.qikegu.com/docs/1820
+
 package org.example;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
