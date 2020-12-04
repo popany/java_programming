@@ -1,6 +1,7 @@
 // https://www.tutorialspoint.com/spring/aop_with_spring.htm
 // https://www.tutorialspoint.com/spring/schema_based_aop_appoach.htm
 // https://www.qikegu.com/docs/1820
+// https://howtodoinjava.com/spring-aop/aspectj-around-advice-example/
 
 package org.example;
 
@@ -21,7 +22,7 @@ public class AppXmlBasedAop
             System.out.println("--------------------------------------------");
 
             System.out.println("============================================");
-            bar.needAround();
+            bar.needAround("a", "b");
             System.out.println("--------------------------------------------");
 
             System.out.println("============================================");

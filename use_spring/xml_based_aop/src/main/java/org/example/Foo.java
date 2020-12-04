@@ -1,5 +1,7 @@
 package org.example;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+
 public class Foo {
     void func1Before() {
         System.out.println("before: func1()");
@@ -9,8 +11,12 @@ public class Foo {
         System.out.println("after: func2()");
     }
 
-    void func3Around() {
-        System.out.println("around: func3()");
+    void func3Around(ProceedingJoinPoint pjp) throws Throwable {
+        System.out.println("around: func3() enter");
+
+        pjp.proceed(pjp.getArgs());
+
+        System.out.println("around: func3() exit");
     }
 
     void func4AfterThrowing(Exception ex) {

@@ -10,8 +10,8 @@ public class Bar {
         System.out.println("> needAfter");
     }
     
-    public void needAround() {
-        System.out.println("> needAround");
+    public void needAround(String s, String t) {
+        System.out.println("> needAround, " + s + ", " + t);
     }
 
     public void needBeforeAfterAround() {
