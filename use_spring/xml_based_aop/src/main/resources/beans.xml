@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:aop = "http://www.springframework.org/schema/aop"
+    xsi:schemaLocation = "http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop.xsd ">
+
+    <aop:config>
+        <aop:aspect id = "fooAop" ref = "foo">
+            <aop:pointcut id = "selectAll" expression = "execution(* org.example.Bar.*(..))"/>
+            <aop:pointcut id = "selectBefore" expression = "execution(* org.example.Bar.needBefore(..))"/>
+            <aop:pointcut id = "selectAfter" expression = "execution(* org.example.Bar.needAfter(..))"/>
+            <aop:pointcut id = "selectAround" expression = "execution(* org.example.Bar.needAround(..))"/>
+            <aop:pointcut id = "selectBeforeAfterAround" expression = "execution(* org.example.Bar.needBeforeAfterAround(..))"/>
+         
+            <aop:before pointcut-ref = "selectBefore" method = "func1Before"/>
+            <aop:after pointcut-ref = "selectAfter" method = "func2After"/>
+            <aop:after pointcut-ref = "selectAround" method = "func3Around"/>
+
+            <aop:after pointcut-ref = "selectBeforeAfterAround" method = "func1Before"/>
+            <aop:after pointcut-ref = "selectBeforeAfterAround" method = "func2After"/>
+            <aop:after pointcut-ref = "selectBeforeAfterAround" method = "func3Around"/>
+         
+            <aop:after-throwing pointcut-ref = "selectAll" throwing = "ex" method = "func4AfterThrowing"/>
+            <aop:after-returning pointcut-ref = "selectAll" returning = "obj" method = "func5AfterReturning"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id = "bar" class = "org.example.Bar"/>
+
+    <bean id = "foo" class = "org.example.Foo"/>
+      
+</beans>
