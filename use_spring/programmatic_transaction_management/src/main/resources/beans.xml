@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xsi:schemaLocation = "http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/jdbc
+                          http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <!-- Initialization for data source -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:test;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
+        <jdbc:script location="classpath:schema.sql"/>
+    </jdbc:initialize-database>
+
+    <!-- Initialization for TransactionManager -->
+    <bean id = "transactionManager" 
+        class = "org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name = "dataSource"  ref = "dataSource" />    
+     </bean>
+
+    <!-- Definition for studentJDBCTemplate bean -->
+    <bean id = "studentJDBCTemplate"
+        class = "org.example.StudentJDBCTemplate">
+        <property name = "dataSource" ref = "dataSource" />
+        <property name = "transactionManager" ref = "transactionManager" />    
+    </bean>
+      
+</beans>
