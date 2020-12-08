@@ -12,16 +12,28 @@ public class AppDeclarativeTransactionManagement
     public static void main( String[] args )
     {
         try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml")) {
-            StudentJDBCTemplate studentJDBCTemplate = (StudentJDBCTemplate)context.getBean("studentJDBCTemplate");
+            StudentDAO studentJDBCTemplate = (StudentDAO)context.getBean("studentJDBCTemplate");
       
             System.out.println("------Records creation--------" );
-            studentJDBCTemplate.create("Zara", 11, 99, 2010);
-            studentJDBCTemplate.create("Nuha", 20, 97, 2010);
-            studentJDBCTemplate.create("Ayan", 25, 100, 2011);
+            try {
+                studentJDBCTemplate.create("Zara", 11, 99, 2010);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            try {
+                studentJDBCTemplate.create("Nuha", 20, 97, 2010);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            try {
+                studentJDBCTemplate.create("Ayan", 25, 100, 2011);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
 
             System.out.println("------Listing all the records--------" );
             List<StudentMarks> studentMarks = studentJDBCTemplate.listStudents();
-      
+            
             for (StudentMarks record : studentMarks) {
                 System.out.print("ID : " + record.getId() );
                 System.out.print(", Name : " + record.getName() );

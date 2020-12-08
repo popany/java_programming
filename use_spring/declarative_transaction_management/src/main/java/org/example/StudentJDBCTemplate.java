@@ -25,7 +25,9 @@ public class StudentJDBCTemplate implements StudentDAO {
             System.out.println("Created Name = " + name + ", Age = " + age);
          
             // to simulate the exception.
-            throw new RuntimeException("simulate Error condition") ;
+            if (name.equals("Nuha")) {
+                throw new RuntimeException("simulate Error condition, name == " + name) ;
+            }
         } 
         catch (DataAccessException e) {
             System.out.println("Error in creating record, rolling back");
