@@ -3,12 +3,5 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <servlet> 
-    <servlet-name>HelloForm</servlet-name>
-    <servlet-class>org.example.HelloForm</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HelloForm</servlet-name>
-    <url-pattern>/use_cookie/HelloForm</url-pattern>
-  </servlet-mapping>
+  <display-name>Archetype Created Web Application</display-name>
 </web-app>
