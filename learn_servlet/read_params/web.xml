@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
-  <servlet>
-    <servlet-name>ReadParams</servlet-name>
-    <servlet-class>org.example.learn_servlet.read_params</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ReadParams</servlet-name>
-    <url-pattern>/TestTomcat/ReadParams</url-pattern>
-  </servlet-mapping>
 </web-app>
+
