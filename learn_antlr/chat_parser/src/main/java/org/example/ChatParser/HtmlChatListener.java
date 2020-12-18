@@ -1,9 +1,11 @@
 package org.example.ChatParser;
 
 import org.example.ChatParser.ChatParser.ChatContext;
+import java.util.HashMap;
 
 public class HtmlChatListener extends ChatBaseListener {
     StringBuilder htmlText = new StringBuilder();
+    HashMap<Object, String> ctxText = new HashMap<Object, String>();
 
     void resetHtmlText() {
         htmlText.delete(0, htmlText.length());
@@ -40,11 +42,11 @@ public class HtmlChatListener extends ChatBaseListener {
         String emoticon = ctx.getText();
 
         if(emoticon.equals(":-)") || emoticon.equals(":)")) {
-            htmlText.append("🙂");        
+            ctxText.put(ctx, "🙂");        
         }
     
         if(emoticon.equals(":-(") || emoticon.equals(":(")) {
-            htmlText.append("🙁");            
+            ctxText.put(ctx, "🙁");            
         }
     }
 
@@ -58,7 +60,32 @@ public class HtmlChatListener extends ChatBaseListener {
     }
 
     @Override
-    public void exitCommand(ChatParser.CommandContext ctx) {
-        htmlText.append("</p>");
+    public void exitColor(ChatParser.ColorContext ctx) {
+        StringBuilder text = new StringBuilder();
+        String color = ctx.WORD().getText();
+        text.append("<span style=\"color: " + color + "\">");
+        text.append(ctxText.get(ctx.message()));
+        text.append("</span>");
+        ctxText.put(ctx, text.toString());
+    }
+
+    @Override
+    public void exitMessage(ChatParser.MessageContext ctx) {
+        StringBuilder text = new StringBuilder();
+
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+            if (ctxText.containsKey(ctx.getChild(i))) {
+                text.append(ctxText.get(ctx.getChild(i)));
+            } else {
+                text.append(ctx.getChild(i).getText());
+            }
+        }
+
+        if (ctx.getParent() instanceof ChatParser.LineContext) {
+            htmlText.append(text.toString());
+            htmlText.append("</p>");
+        } else {
+            ctxText.put(ctx, text.toString());
+        }
     }
 }

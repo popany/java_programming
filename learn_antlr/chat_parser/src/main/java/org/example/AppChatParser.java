@@ -29,6 +29,16 @@ public class AppChatParser
         }
     }
 
+    static void printStringTree(String text) {
+        CharStream inputStream = CharStreams.fromString(text);
+        ChatLexer ChatLexer = new ChatLexer(inputStream);
+        CommonTokenStream commonTokenStream = new CommonTokenStream(ChatLexer);
+        ChatParser chatParser = new ChatParser(commonTokenStream);
+        HtmlChatListener htmlChatListener = new HtmlChatListener();
+        ParseTree parseTree = chatParser.chat();
+        System.out.println(parseTree.toStringTree(chatParser));
+    }
+
     static void writeHtml(String text) {
         CharStream inputStream = CharStreams.fromString(text);
         ChatLexer ChatLexer = new ChatLexer(inputStream);
@@ -57,7 +67,10 @@ public class AppChatParser
         System.out.println("\n\n<printToken>================================================");
         printTokens(text);
 
-        System.out.println("\n\n<printHtml>================================================");
+        System.out.println("\n\n<printStringTree>================================================");
+        printStringTree(text);
+
+        System.out.println("\n\n<writeHtml>================================================");
         writeHtml(text);
     }
 }
