@@ -14,8 +14,8 @@ public class AppSemanticPredicatesTest
 {
     ChatParser createChatParser(String text) {
         CharStream inputStream = CharStreams.fromString(text);
-        ChatLexer ChatLexer = new ChatLexer(inputStream);
-        CommonTokenStream commonTokenStream = new CommonTokenStream(ChatLexer);
+        ChatLexer chatLexer = new ChatLexer(inputStream);
+        CommonTokenStream commonTokenStream = new CommonTokenStream(chatLexer);
         ChatParser chatParser = new ChatParser(commonTokenStream);
         chatParser.removeErrorListeners();
         chatParser.addErrorListener(new ChatErrorListener());
