@@ -19,7 +19,7 @@ public class MarkupErrorListener extends BaseErrorListener {
         String msg,
         RecognitionException e)
     {
-        System.out.println(String.format("[MarkupErrorListener.syntaxError] %s" + msg));
+        System.out.println(String.format("[MarkupErrorListener.syntaxError] %s", msg));
 
         if(offendingSymbol.getClass().getName() == "org.antlr.v4.runtime.CommonToken")
         {            
