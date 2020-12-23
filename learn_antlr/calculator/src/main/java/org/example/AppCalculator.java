@@ -40,7 +40,8 @@ public class AppCalculator
             CommonTokenStream tokens = new CommonTokenStream(lexer); 
             ExprParser parser = new ExprParser(tokens); 
             ParseTree tree = parser.prog();
-            System.out.println("output> " + tree.toStringTree(parser));
+            EvalVisitor eval = new EvalVisitor();
+            eval.visit(tree);
         }
     }
 }
