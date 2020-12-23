@@ -13,14 +13,14 @@ import org.antlr.v4.runtime.tree.*;
 public class AppCalculator 
 {
     static String getInput() {
-        System.out.println("Please enter expressions (\\n for line break): ");
+        System.out.println("Please enter expressions (\';\' for line break): ");
 
         String input = System.console().readLine(); 
         if (input == null) {
             return null;
         }
 
-        input = input.replaceAll("\\\\n", "\n");
+        input = input.replaceAll(";", "\n");
         input = input + "\n";
         return input;
     }
@@ -34,6 +34,7 @@ public class AppCalculator
             }
 
             System.out.println(String.format("input>\n%s", input));
+            System.out.println(String.format("output>\n"));
 
             CharStream inputStream = CharStreams.fromString(input);
             ExprLexer lexer = new ExprLexer(inputStream); 
