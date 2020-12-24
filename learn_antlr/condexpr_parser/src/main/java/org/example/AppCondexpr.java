@@ -6,6 +6,9 @@ import org.example.condexpr.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
+import java.util.List;
+import java.util.Arrays;
+
 public class AppCondexpr 
 {
     static String getInput() {
@@ -19,7 +22,7 @@ public class AppCondexpr
     }
 
     static void printTokens(CommonTokenStream tokenStream, Vocabulary vocabulary) {
-        System.out.println("tokens>");
+        System.out.println("\ntokens>");
         for (Token token : tokenStream.getTokens()) {
             String tokenName = vocabulary.getDisplayName(token.getType());
             System.out.println(String.format("%s -> %s", token.getText(), tokenName));
@@ -27,8 +30,14 @@ public class AppCondexpr
     }
 
     static void printTree(ParseTree tree, CondexprParser parser) {
-        System.out.println("tree>");
+        System.out.println("\ntree>");
         System.out.println(tree.toStringTree(parser));
+        System.out.println("\npretty tree>");
+        List<String> ruleNames = Arrays.asList(parser.getRuleNames());
+
+        TreePrinterListener listener = new TreePrinterListener(ruleNames);
+        ParseTreeWalker.DEFAULT.walk(listener, tree);
+        System.out.println(listener.toString());
     }
 
     public static void main( String[] args )
@@ -39,7 +48,7 @@ public class AppCondexpr
                 break;
             }
 
-            System.out.println(String.format("input>\n%s", input));
+            System.out.println(String.format("\ninput>\n%s", input));
 
             CharStream inputStream = CharStreams.fromString(input);
             CondexprLexer lexer = new CondexprLexer(inputStream); 
@@ -50,7 +59,7 @@ public class AppCondexpr
             printTokens(tokenStream, parser.getVocabulary());
             printTree(tree, parser);
 
-            System.out.println(String.format("output>\n"));
+            System.out.println(String.format("\noutput>\n"));
             DemoCondexprVisitor visitor = new DemoCondexprVisitor();
             visitor.visit(tree);
         }
