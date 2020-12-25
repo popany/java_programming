@@ -83,6 +83,7 @@ functionCall
 
 specificFunction
     : CAST '(' expression AS convertedDataType ')'                  #dataTypeFunctionCall
+    | CONVERT '(' expression separator=',' convertedDataType ')'    #dataTypeFunctionCall
     ;
 
 functionArgs

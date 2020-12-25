@@ -13,6 +13,7 @@ AS:                                  'AS';
 BETWEEN:                             'BETWEEN';
 CAST:                                'CAST';
 CHARACTER:                           'CHARACTER';
+CONVERT:                             'CONVERT';
 FALSE:                               'FALSE';
 IS:                                  'IS';
 IN:                                  'IN';
