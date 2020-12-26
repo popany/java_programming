@@ -20,21 +20,30 @@ import java.lang.reflect.*;
 
 public class AppCreateClass {
     static String className;
-    static String sourceFilePath;
+    static Path sourceFilePath;
+    static Path classFilePath;
     static final String packageName = "org.example.functor";
     static final String dynamicGenDir = "./dynamic_gen";
 
-    static void createSource() throws Exception{
+    static void setClassName() {
         //String fileNameSuffix = Long.toString(new Date().getTime());
         String fileNameSuffix = "AA";
         className = "Functor" + fileNameSuffix;
-        String packageDir = dynamicGenDir + "/" + packageName.replaceAll("\\.", "/");
-        sourceFilePath = packageDir + "/" + className + ".java";
+    }
 
-        Files.createDirectories(Paths.get(dynamicGenDir));
+    static void createDirs() throws Exception {
+        sourceFilePath = Paths.get(Paths.get(dynamicGenDir, packageName.split("\\.")).toString(), className + ".java");
+        classFilePath = Paths.get(Paths.get(dynamicGenDir, packageName.split("\\.")).toString(), className + ".class");
+
+
+        Files.createDirectories(sourceFilePath.getParent());
+        Files.createDirectories(classFilePath.getParent());
+    }
+
+    static void createSource() throws Exception{
 
         try {
-            FileWriter fileWriter = new FileWriter(sourceFilePath, false);
+            FileWriter fileWriter = new FileWriter(sourceFilePath.toString(), false);
             fileWriter.write("package " + packageName + ";\n");
             fileWriter.write("import org.example.utils.Utils;\n");
             fileWriter.write("public class "+ className + " implements IFunctor {\n");
@@ -52,14 +61,10 @@ public class AppCreateClass {
     }
 
     static void compile() throws Exception {
-        String [] sources = { new String(sourceFilePath) };
-
-        String packageDir = dynamicGenDir + "/" + packageName.replaceAll("\\.", "/");
-        Files.createDirectories(Paths.get(packageDir));
-        String classFilePath = packageDir + "/" + className + ".class";
+        String [] sources = { new String(sourceFilePath.toString()) };
 
         com.sun.tools.javac.Main m = new com.sun.tools.javac.Main();
-        if (m.compile(sources, new PrintWriter(classFilePath)) != 0) {
+        if (m.compile(sources, new PrintWriter(classFilePath.toString())) != 0) {
             throw new RuntimeException("failed to compile");
         }
     }
@@ -77,6 +82,8 @@ public class AppCreateClass {
 
     public static void main(String[] args) {
         try {
+            setClassName();
+            createDirs();
             createSource();
             compile();
             call();
