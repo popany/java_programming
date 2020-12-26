@@ -35,7 +35,6 @@ public class AppCreateClass {
         sourceFilePath = Paths.get(Paths.get(dynamicGenDir, packageName.split("\\.")).toString(), className + ".java");
         classFilePath = Paths.get(Paths.get(dynamicGenDir, packageName.split("\\.")).toString(), className + ".class");
 
-
         Files.createDirectories(sourceFilePath.getParent());
         Files.createDirectories(classFilePath.getParent());
     }
