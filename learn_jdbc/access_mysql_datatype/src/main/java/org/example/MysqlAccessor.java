@@ -138,4 +138,12 @@ public class MysqlAccessor {
         }
         return columnInfos;
     }
+
+    public PreparedStatement getPreparedStatement(String sql) throws SQLException {
+        return conn.prepareStatement(sql);
+    }
+
+    public Statement getStatement() throws SQLException {
+        return conn.createStatement();
+    }
 }
