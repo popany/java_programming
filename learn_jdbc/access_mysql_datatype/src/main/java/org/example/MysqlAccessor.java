@@ -32,9 +32,13 @@ public class MysqlAccessor {
 
     public String getMysqlVersion() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet resultSet = stmt.executeQuery("select @@version as version");
-        resultSet.next();
-        return resultSet.getString(1);
+        try {
+            ResultSet resultSet = stmt.executeQuery("select @@version as version");
+            resultSet.next();
+            return resultSet.getString(1);
+        } finally {
+            stmt.close();
+        }
     }
 
     public void printResultSet(ResultSet resultSet) throws SQLException {
@@ -63,14 +67,22 @@ public class MysqlAccessor {
 
     public void printResult(String sql) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet resultSet = stmt.executeQuery(sql);
-        printResultSet(resultSet);
+        try {
+            ResultSet resultSet = stmt.executeQuery(sql);
+            printResultSet(resultSet);
+        } finally {
+            stmt.close();
+        }
     }
 
     public void dropTable(String tableName) throws SQLException {
         System.out.println("DROP TABLE " + tableName);
         Statement stmt = conn.createStatement();
-        stmt.execute(String.format("DROP TABLE %s", tableName));
+        try {
+            stmt.execute(String.format("DROP TABLE %s", tableName));
+        } finally {
+            stmt.close();
+        }
     }
 
     boolean checkExistTable(String tableName) throws SQLException {
@@ -111,32 +123,41 @@ public class MysqlAccessor {
         }
         sb.append(")");
         System.out.println(sb.toString());
+
         Statement stmt = conn.createStatement();
-        stmt.execute(sb.toString());
+        try {
+            stmt.execute(sb.toString());
+        } finally {
+            stmt.close();
+        }
     }
 
     public List<ColumnInfo> getColumnInfos(String tableName) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet res = stmt.executeQuery(String.format("select * from %s where 1<0", tableName));
-        ResultSetMetaData rsmd=res.getMetaData();
+        try {
+            ResultSet res = stmt.executeQuery(String.format("select * from %s where 1<0", tableName));
+            ResultSetMetaData rsmd=res.getMetaData();
 
-        List<ColumnInfo> columnInfos = new ArrayList<ColumnInfo>();
+            List<ColumnInfo> columnInfos = new ArrayList<ColumnInfo>();
 
-        int columnCount = rsmd.getColumnCount();
-        for (int i = 0; i < columnCount; i++) {
-            ColumnInfo columnInfo = new ColumnInfo();
-            columnInfo.setCatalogName(rsmd.getCatalogName(i + 1));
-            columnInfo.setColumnClassName(rsmd.getColumnClassName(i + 1));
-            columnInfo.setColumnLabel(rsmd.getColumnLabel(i + 1));
-            columnInfo.setColumnName(rsmd.getColumnName(i + 1));
-            columnInfo.setColumnType(rsmd.getColumnType(i + 1));
-            columnInfo.setColumnTypeName(rsmd.getColumnTypeName(i + 1));
-            columnInfo.setPrecision(rsmd.getPrecision(i + 1));
-            columnInfo.setScale(rsmd.getScale(i + 1));  // Gets the designated column's number of digits to right of the decimal point. 0 is returned for data types where the scale is not applicable.
+            int columnCount = rsmd.getColumnCount();
+            for (int i = 0; i < columnCount; i++) {
+                ColumnInfo columnInfo = new ColumnInfo();
+                columnInfo.setCatalogName(rsmd.getCatalogName(i + 1));
+                columnInfo.setColumnClassName(rsmd.getColumnClassName(i + 1));
+                columnInfo.setColumnLabel(rsmd.getColumnLabel(i + 1));
+                columnInfo.setColumnName(rsmd.getColumnName(i + 1));
+                columnInfo.setColumnType(rsmd.getColumnType(i + 1));
+                columnInfo.setColumnTypeName(rsmd.getColumnTypeName(i + 1));
+                columnInfo.setPrecision(rsmd.getPrecision(i + 1));
+                columnInfo.setScale(rsmd.getScale(i + 1));  // Gets the designated column's number of digits to right of the decimal point. 0 is returned for data types where the scale is not applicable.
 
-            columnInfos.add(columnInfo);
+                columnInfos.add(columnInfo);
+            }
+            return columnInfos;
+        } finally {
+            stmt.close();
         }
-        return columnInfos;
     }
 
     public PreparedStatement getPreparedStatement(String sql) throws SQLException {
