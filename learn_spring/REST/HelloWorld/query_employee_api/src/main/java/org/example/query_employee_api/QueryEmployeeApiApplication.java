@@ -1,0 +1,13 @@
+package org.example.query_employee_api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class QueryEmployeeApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(QueryEmployeeApiApplication.class, args);
+	}
+
+}
