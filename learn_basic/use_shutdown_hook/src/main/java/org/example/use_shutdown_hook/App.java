@@ -19,7 +19,7 @@ public class App
                 while (Stopper.isRunning()) {
                     try {
                         System.out.println("app is running..., " + i++);
-                        Thread.sleep(1000L);
+                        Thread.sleep(3000L);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -42,12 +42,13 @@ public class App
 
         try {
             //thread sleep 3 seconds for thread quietly stop
-            Thread.sleep(3000L);
+            Thread.sleep(1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         while (t.isAlive()) {
             try {
+                System.out.println("wait for stop");
                 t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
