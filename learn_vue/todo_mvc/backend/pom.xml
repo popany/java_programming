@@ -54,13 +54,11 @@
                             <overwrite>true</overwrite>
                             <resources>
                                 <resource>
-                                    <directory>${project.parent.basedir}/frontend/dist</directory>
+                                    <directory>${project.parent.basedir}/frontend/target/dist</directory>
                                     <includes>
-                                        <include>css/</include>
-                                        <include>favicon.ico</include>
-                                        <include>img/</include>
+                                        <include>static/</include>
                                         <include>index.html</include>
-                                        <include>js/</include>
+                                        <include>favicon.ico</include>
                                     </includes>
                                 </resource>
                             </resources>
