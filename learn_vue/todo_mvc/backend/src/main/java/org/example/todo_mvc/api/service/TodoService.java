@@ -1,5 +1,6 @@
 package org.example.todo_mvc.api.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,10 +23,14 @@ public class TodoService extends BaseService {
     @Autowired
     TodoMapper todoMapper;
 
-    public Map<String, Object> createTodo(String todoJson) {
+    public Map<String, Object> createTodo(String title) {
         Map<String, Object> result = new HashMap<>();
 
-        Todo todo = JSONUtils.parseObject(todoJson, Todo.class);
+        Todo todo = new Todo();
+        todo.setTitle(title);
+        Date now = new Date();
+        todo.setCreateTime(now);
+        todo.setUpdateTime(now);
         if (todoMapper.insert(todo) > 0) {
             putMsg(result, Status.SUCCESS);
         } else {

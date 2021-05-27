@@ -30,10 +30,10 @@ public class TodoController extends BaseController {
     @PostMapping(value = "/create")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiException(Status.CREATE_TODO_ERROR)
-    public Result createTodo(@RequestParam(value = "todoJson", required = true) String todoJson) {
-        logger.info("create todo, todo_json: {}", todoJson);
+    public Result createTodo(@RequestParam(value = "title", required = true) String title) {
+        logger.info("create todo, title: {}", title);
 
-        Map<String, Object> result = todoService.createTodo(todoJson);
+        Map<String, Object> result = todoService.createTodo(title);
         return returnDataList(result);
     }
     
