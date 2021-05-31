@@ -17,7 +17,7 @@
             "mainClass": "org.example.todo_mvc.TodoMvcApplication",
             "projectName": "backend",
             "env" : {
-                "MYSQL_HOST": "172.21.0.2"
+                "MYSQL_HOST": "172.21.0.3"
             }
         }
     ]
