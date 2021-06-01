@@ -1,4 +1,2 @@
-INSERT INTO t_todo (id, title, completed, create_time) VALUES
-(1, 'task-1', TRUE, CURRENT_TIMESTAMP()),
-(2, 'task-2', FALSE, CURRENT_TIMESTAMP()),
-(3, 'task-3', FALSE, CURRENT_TIMESTAMP()) ON DUPLICATE KEY UPDATE create_time=CURRENT_TIMESTAMP();
+INSERT INTO t_user (id, user_name, user_password, user_type, create_time) VALUES
+(1, 'admin', '123', 0, CURRENT_TIMESTAMP()) ON DUPLICATE KEY UPDATE id=id;

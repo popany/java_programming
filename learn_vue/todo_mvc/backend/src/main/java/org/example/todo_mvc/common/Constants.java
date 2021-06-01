@@ -21,4 +21,16 @@ public class Constants {
     public static final String PAGE_NUMBER = "pageNo";
 
     public static final String PAGE_SIZE = "pageSize";
+
+    public static final String SESSION_USER = "session.user";
+
+    public static final String SESSION_ID = "sessionId";
+
+    public static final String HTTP_HEADER_UNKNOWN = "unKnown";
+
+    public static final String HTTP_X_FORWARDED_FOR = "X-Forwarded-For";
+
+    public static final String HTTP_X_REAL_IP = "X-Real-IP";
+
+    public static final String COMMA = ",";
 }
