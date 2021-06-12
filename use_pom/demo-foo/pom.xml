@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <slf4j.api.version>1.7.30</slf4j.api.version>
         <log4j.version>2.14.1</log4j.version>
     </properties>
@@ -37,10 +38,29 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <finalName>demo-foo-${project.version}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <testSource>${java.version}</testSource>
+                        <testTarget>${java.version}</testTarget>
+                    </configuration>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <modules>
         <module>foo-common</module>
         <module>foo-dist</module>
-        <module>foo-server</module>
+        <!--module>foo-server</module-->
     </modules>
 
 </project>
