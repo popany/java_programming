@@ -1,5 +1,7 @@
 package org.example.foo.server.worker;
 
+import org.example.foo.common.Constants;
+import org.example.foo.common.utils.PropertyUtils;
 import org.example.foo.server.worker.config.WorkerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,7 @@ public class WorkerServer {
         try {
             while (true) {
                 Thread.sleep(workerConfig.getWorkerPollingintervalseconds() * 1000);
-                logger.info("worker");
+                logger.info("worker: {}", PropertyUtils.getString(Constants.NODE_NAME));
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
