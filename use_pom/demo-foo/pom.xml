@@ -60,7 +60,7 @@
     <modules>
         <module>foo-common</module>
         <module>foo-dist</module>
-        <!--module>foo-server</module-->
+        <module>foo-server</module>
     </modules>
 
 </project>
