@@ -6,10 +6,10 @@
         <artifactId>demo-foo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>foo-server</artifactId>
+    <artifactId>foo-dist</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>${project.artifactId}</name>
+    <name>foo-dist</name>
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>

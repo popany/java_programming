@@ -6,7 +6,7 @@
     <artifactId>demo-foo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>${project.artifactId}</name>
+    <name>demo-foo</name>
     <description>Demo foo project</description>
 
     <properties>
