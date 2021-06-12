@@ -18,8 +18,8 @@ public class WorkerServer {
                 Thread.sleep(workerConfig.getWorkerPollingintervalseconds() * 1000);
                 logger.info("worker");
             }
-        } catch (Exception ex) {
-            logger.error(null, ex);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
     }
     

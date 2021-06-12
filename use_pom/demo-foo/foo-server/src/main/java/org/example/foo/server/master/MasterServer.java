@@ -18,8 +18,8 @@ public class MasterServer {
                 Thread.sleep(masterConfig.getMasterPollingintervalseconds() * 1000);
                 logger.info("master");
             }
-        } catch (Exception ex) {
-            logger.error(null, ex);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
     }
     
