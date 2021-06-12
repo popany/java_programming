@@ -5,7 +5,8 @@
     <groupId>org.example</groupId>
     <artifactId>demo-foo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo-foo</name>
+    <packaging>pom</packaging>
+    <name>${project.artifactId}</name>
     <description>Demo foo project</description>
 
     <properties>
