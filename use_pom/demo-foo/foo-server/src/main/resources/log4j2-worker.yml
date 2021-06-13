@@ -5,10 +5,9 @@ Configuration:
 
   Properties:
     Property:
-      name: log-path
+    - name: log-path
       value: logs
-    Property:
-      name: log-name
+    - name: log-name
       value: worker-server
 
   Appenders:
@@ -46,9 +45,9 @@ Configuration:
       additivity: false
       level: debug
       AppenderRef:
-        - ref: Console_Appender
-          level: info
-        - ref: File_Appender
-          level: error
-        - ref: RollingFile_Appender
-          level: debug
+      - ref: Console_Appender
+        level: info
+      - ref: File_Appender
+        level: error
+      - ref: RollingFile_Appender
+        level: debug
