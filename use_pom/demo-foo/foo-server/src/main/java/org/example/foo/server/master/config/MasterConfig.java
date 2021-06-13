@@ -11,6 +11,6 @@ import lombok.Getter;
 @PropertySource(value = "master.properties")
 public class MasterConfig {
 
-    @Value("${master.pollingintervalseconds:1}")
+    @Value("${master.pollingintervalseconds:10}")
     private int masterPollingintervalseconds;
 }

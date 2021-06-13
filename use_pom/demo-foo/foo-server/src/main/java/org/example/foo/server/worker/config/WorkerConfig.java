@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Component
-@PropertySource(value = "workder.properties")
+@PropertySource(value = "worker.properties")
 public class WorkerConfig {
 
     @Value("${worker.pollingintervalseconds:10}")
