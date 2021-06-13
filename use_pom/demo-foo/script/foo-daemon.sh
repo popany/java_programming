@@ -50,7 +50,7 @@ elif [ "$command" = "worker-server" ]; then
     HEAP_INITIAL_SIZE=2g
     HEAP_MAX_SIZE=2g
     HEAP_NEW_GENERATION__SIZE=1g
-    LOG_FILE="-Dlogging.config=classpath:log4j2-worker.yml"
+    LOG_FILE="-Dlog4j.configurationFile=classpath:log4j2-worker.yml"
     CLASS=org.example.foo.server.worker.WorkerServer
 else
     echo "Error: No command named \`$command' was found."

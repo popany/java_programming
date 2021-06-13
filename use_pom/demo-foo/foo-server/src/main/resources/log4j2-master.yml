@@ -1,24 +1,33 @@
-Configuration:
-  status: warn
-  name: YAMLConfig
-  properties:
-    property:
-      name: filename
-      value: target/master-server.log
-  thresholdFilter:
-    level: debug
-  appenders:
-    Console:
-      name: STDOUT
-      target: SYSTEM_OUT
-      PatternLayout:
-        Pattern: "%m%n"
-    File:
-      name: File
-      fileName: ${filename}
-      PatternLayout:
-        Pattern: "%d %p %C{1.} [%t] %m%n"
-      Filters:
-        ThresholdFilter:
-          level: info
- 
+ Configuration:
+   status: debug
+   name: Default
+
+   Properties:
+     Property:
+       name: log-path
+       value: logs
+
+   Appenders:
+     Console:
+       name: Console_Appender
+       target: SYSTEM_OUT
+       PatternLayout:
+         Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+     File:
+       name: File_Appender
+       fileName: ${log-path}/master-server.log
+       PatternLayout:
+         Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+
+   Loggers:
+     Root:
+       level: debug
+       AppenderRef:
+         - ref: Console_Appender
+
+     Logger:
+       - name: org.example.foo.server.master.MasterServer
+         level: debug
+         AppenderRef:
+           - ref: File_Appender
+             level: info

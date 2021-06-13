@@ -3,6 +3,7 @@ package org.example.foo.server.worker;
 import javax.annotation.PostConstruct;
 
 import org.example.foo.common.Constants;
+import org.example.foo.common.Stopper;
 import org.example.foo.common.utils.PropertyUtils;
 import org.example.foo.server.worker.config.WorkerConfig;
 import org.slf4j.Logger;
@@ -31,13 +32,45 @@ public class WorkerServer {
     @PostConstruct
     public void run() {
         try {
-            while (true) {
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    close("shutdownHook");
+                }
+            }));
+
+            while (Stopper.isRunning()) {
                 Thread.sleep(workerConfig.getWorkerPollingintervalseconds() * 1000);
                 logger.info("worker: {}", PropertyUtils.getString(Constants.NODE_NAME));
                 logger.debug("worker: debug");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+        }
+    }
+
+    public void close(String cause) {
+
+        try {
+            // execute only once
+            if(Stopper.isStopped()){
+                return;
+            }
+
+            logger.info("worker server is stopping ..., cause : {}", cause);
+
+            // set stop signal is true
+            Stopper.stop();
+
+            try {
+                //thread sleep 3 seconds for thread quietly stop
+                Thread.sleep(3000L);
+            }catch (Exception e){
+                logger.warn("thread sleep exception ", e);
+            }
+        } catch (Exception e) {
+            logger.error("worker server stop exception ", e);
+            System.exit(-1);
         }
     }
     
