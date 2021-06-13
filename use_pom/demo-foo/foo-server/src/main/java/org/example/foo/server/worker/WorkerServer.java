@@ -34,6 +34,7 @@ public class WorkerServer {
             while (true) {
                 Thread.sleep(workerConfig.getWorkerPollingintervalseconds() * 1000);
                 logger.info("worker: {}", PropertyUtils.getString(Constants.NODE_NAME));
+                logger.debug("worker: debug");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

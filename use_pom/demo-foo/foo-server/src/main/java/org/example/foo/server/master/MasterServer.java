@@ -35,6 +35,7 @@ public class MasterServer {
             while (true) {
                 Thread.sleep(masterConfig.getMasterPollingintervalseconds() * 1000);
                 logger.info("master: {}", PropertyUtils.getString(Constants.NODE_NAME));
+                logger.debug("master: debug");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
