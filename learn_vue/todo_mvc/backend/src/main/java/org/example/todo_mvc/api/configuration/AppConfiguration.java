@@ -24,7 +24,7 @@ public class AppConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor())
             .addPathPatterns(LOGIN_INTERCEPTOR_PATH_PATTERN)
-            .excludePathPatterns(LOGIN_PATH_PATTERN, "/swagger-resources/**", "/webjars/**", "/v2/**", "/v3/**", "*.html", "/swagger-ui/**");
+            .excludePathPatterns(LOGIN_PATH_PATTERN, "/swagger-resources/**", "/webjars/**", "/v2/**", "/v3/**", "*.html", "/swagger-ui/**", "/doc.html");
     }
 
     @Override
