@@ -5,4 +5,5 @@
 
 ## API DOC
 
-    http://localhost:50000/swagger-ui/index.html
+    http://localhost:50000/doc.html
+    
