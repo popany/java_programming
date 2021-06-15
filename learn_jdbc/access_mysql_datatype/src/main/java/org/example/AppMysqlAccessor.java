@@ -8,7 +8,7 @@ import java.util.Properties;
 public class AppMysqlAccessor {
     static Properties readProperties() throws IOException {
         Properties prop = new Properties();
-        try (InputStream input = new FileInputStream("./config.properties")) {
+        try (InputStream input = AppMysqlAccessor.class.getResourceAsStream("/config.properties")) {
             prop.load(input);
             return prop;
         }
