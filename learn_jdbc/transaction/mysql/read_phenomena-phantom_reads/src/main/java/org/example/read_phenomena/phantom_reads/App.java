@@ -1,4 +1,7 @@
-package org.example.isolation.repeatable_read;
+// wikipedia - Isolation (database systems) - https://en.wikipedia.org/wiki/Isolation_(database_systems)
+// MySQL 8.0 Reference Manual - 15.7.4 Phantom Rows - https://dev.mysql.com/doc/refman/8.0/en/innodb-next-key-locking.html
+
+package org.example.read_phenomena.phantom_reads;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -41,14 +44,14 @@ public class App
         }
     }
 
-    static private void updateInOtherTransaction() {
+    static private void insertInOtherTransaction() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Integer> future = executor.submit(new Callable<Integer>() {
             public Integer call() throws Exception {
                 Connection conn = getConnection();
                 conn.setAutoCommit(false);
                 Statement stat = conn.createStatement();
-                stat.executeUpdate("update t_test set name='bar' where id=1");
+                stat.executeUpdate("insert into t_test(id, name) values (2, 'baz')");
                 conn.commit();
                 return 0;
             }
@@ -71,6 +74,7 @@ public class App
         ENGINE=InnoDB;
 
         INSERT t_test (id, NAME) VALUES(1, "foo");
+        INSERT t_test (id, NAME) VALUES(3, "bar");
     */
     public static void main( String[] args ) {
         try {
@@ -78,17 +82,23 @@ public class App
             conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
             conn.setAutoCommit(false);
             Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery("select id, name from t_test");
-            printResultSet(rs); // print: "1, foo"
+            ResultSet rs = stat.executeQuery("select id, name from t_test where id between 1 and 3");
+            printResultSet(rs); // print: "1, foo" + "3, bar"
 
-            updateInOtherTransaction();
+            insertInOtherTransaction();
 
-            rs = stat.executeQuery("select id, name from t_test");
-            printResultSet(rs); // print: "1, foo", because this transaction's isolation level is REPEATABLE_READ, can't see the update of name in the transaction
+            rs = stat.executeQuery("select id, name from t_test where id between 1 and 3");
+            printResultSet(rs); // print: "1, foo" + "3, bar", phantom read not happen, different with the read phenomena in wikipedia-Isolation(the ANSI/ISO standard SQL 92)
+            try {
+                stat.executeUpdate("insert into t_test(id, name) values (2, 'baz')"); // throws - java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '2' for key 't_test.PRIMARY'
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             conn.commit(); // transaction will be closed after commit
-            rs = stat.executeQuery("select id, name from t_test");
-            printResultSet(rs); // print: "1, bar", because a new transaction was created
+            rs = stat.executeQuery("select id, name from t_test where id between 1 and 3");
+            printResultSet(rs); // print: "1, foo" + "2, baz" + "3, bar"
             conn.commit();
         }
         catch (Exception e) {
