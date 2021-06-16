@@ -68,8 +68,9 @@ public class App
     /* prerequest:
 
         CREATE TABLE `t_test` (
-        `id` INT NULL,
-        `name` VARCHAR(50) NULL
+        `id` INT NOT NULL,
+        `name` VARCHAR(50) NULL,
+        PRIMARY KEY (`id`) USING BTREE
         )
         ENGINE=InnoDB;
 
