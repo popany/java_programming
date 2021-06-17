@@ -3,7 +3,7 @@ package org.example.hello.world.server;
 import javax.annotation.PostConstruct;
 
 import org.example.hello.world.server.config.ServerConfig;
-import org.example.hello.world.server.grpc.ByeServiceImpl;
+import org.example.hello.world.server.grpc.GoodbyeServiceImpl;
 import org.example.hello.world.server.grpc.HelloServiceImpl;
 import org.example.hello.world.common.Constants;
 import org.example.hello.world.common.Stopper;
@@ -44,7 +44,7 @@ public class Server {
 
             grpcServer = ServerBuilder.forPort(serverConfig.getGrpcServerPort())
                 .addService(new HelloServiceImpl())
-                .addService(new ByeServiceImpl())
+                .addService(new GoodbyeServiceImpl())
                 .build();
 
             grpcServer.start();

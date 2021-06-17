@@ -6,9 +6,9 @@ import org.example.hello.world.client.config.ClientConfig;
 import org.example.hello.world.common.Constants;
 import org.example.hello.world.common.Stopper;
 import org.example.hello.world.common.utils.PropertyUtils;
-import org.example.hello.world.grpc.ByeServiceGrpc;
-import org.example.hello.world.grpc.ByeRequest;
-import org.example.hello.world.grpc.ByeResponse;
+import org.example.hello.world.grpc.GoodbyeServiceGrpc;
+import org.example.hello.world.grpc.GoodbyeRequest;
+import org.example.hello.world.grpc.GoodbyeResponse;
 import org.example.hello.world.grpc.HelloServiceGrpc;
 import org.example.hello.world.grpc.HelloRequest;
 import org.example.hello.world.grpc.HelloResponse;
@@ -45,7 +45,7 @@ public class Client {
         HelloServiceGrpc.HelloServiceBlockingStub stub = HelloServiceGrpc.newBlockingStub(channel);
 
 
-        HelloResponse helloResponse = stub.hello(HelloRequest.newBuilder()
+        HelloResponse helloResponse = stub.sayHello(HelloRequest.newBuilder()
             .setFirstName("Foo")
             .setLastName("Bar")
             .build());
@@ -55,20 +55,20 @@ public class Client {
         channel.shutdown();
     }
 
-    private void sayBye() {
+    private void sayGoodbye() {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
             .usePlaintext()
             .build();
 
-        ByeServiceGrpc.ByeServiceBlockingStub stub = ByeServiceGrpc.newBlockingStub(channel);
+        GoodbyeServiceGrpc.GoodbyeServiceBlockingStub stub = GoodbyeServiceGrpc.newBlockingStub(channel);
 
 
-        ByeResponse byeResponse = stub.bye(ByeRequest.newBuilder()
+        GoodbyeResponse goodbyeResponse = stub.sayGoodbye(GoodbyeRequest.newBuilder()
             .setFirstName("Foo")
             .setLastName("Bar")
             .build());
 
-        logger.info("Response received from server:{}", byeResponse);
+        logger.info("Response received from server:{}", goodbyeResponse);
 
         channel.shutdown();
     }
@@ -86,7 +86,7 @@ public class Client {
             }));
 
             sayHello();
-            sayBye();
+            sayGoodbye();
                 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

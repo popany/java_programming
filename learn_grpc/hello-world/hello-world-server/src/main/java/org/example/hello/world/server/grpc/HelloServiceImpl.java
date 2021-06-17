@@ -13,8 +13,7 @@ public class HelloServiceImpl extends HelloServiceImplBase {
     private static final Logger logger = LoggerFactory.getLogger(HelloServiceImpl.class);
 
     @Override
-    public void hello(
-      HelloRequest request, StreamObserver<HelloResponse> responseObserver) {
+    public void sayHello(HelloRequest request, StreamObserver<HelloResponse> responseObserver) {
         logger.info("Request received from client: {}", request);
 
         String greeting = new StringBuilder().append("Hello, ")
@@ -30,4 +29,23 @@ public class HelloServiceImpl extends HelloServiceImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void sayHelloAgain(HelloRequest request, StreamObserver<HelloResponse> responseObserver) {
+        logger.info("Request received from client: {}", request);
+
+        String greeting = new StringBuilder().append("Hello, ")
+            .append(request.getFirstName())
+            .append(" ")
+            .append(request.getLastName())
+            .toString();
+
+        HelloResponse response = HelloResponse.newBuilder()
+            .setGreeting(greeting)
+            .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
 }
