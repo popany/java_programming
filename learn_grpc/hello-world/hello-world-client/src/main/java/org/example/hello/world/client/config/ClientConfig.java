@@ -8,9 +8,12 @@ import lombok.Getter;
 
 @Getter
 @Component
-@PropertySource(value = "server.properties")
+@PropertySource(value = "client.properties")
 public class ClientConfig {
 
-    @Value("${master.pollingintervalseconds:10}")
-    private int masterPollingintervalseconds;
+    @Value("${grpc.server.host:localhost}")
+    private String grpcServerHost;
+
+    @Value("${grpc.server.prot:50008}")
+    private int grpcServerPort;
 }

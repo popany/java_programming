@@ -15,19 +15,19 @@ Configuration:
       name: Console_Appender
       target: SYSTEM_OUT
       PatternLayout:
-        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}] %msg%n"
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}:%line] %msg%n"
     File:
       name: File_Appender
       fileName: ${log-path}/${log-name}.err
       PatternLayout:
-        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}] %msg%n"
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}:%line] %msg%n"
 
     RollingFile:
       name: RollingFile_Appender
       fileName: ${log-path}/${log-name}.log
       filePattern: "${log-path}/${log-name}.log.%d{yyyy-MM-dd-hh-mm}.gz"
       PatternLayout:
-        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}] %msg%n"
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}:%line] %msg%n"
       Policies:
         SizeBasedTriggeringPolicy:
           size: 1 KB
