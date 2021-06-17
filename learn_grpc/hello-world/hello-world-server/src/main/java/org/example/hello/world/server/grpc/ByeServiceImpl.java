@@ -10,7 +10,7 @@ import io.grpc.stub.StreamObserver;
 
 public class ByeServiceImpl extends ByeServiceImplBase{
 
-    private static final Logger logger = LoggerFactory.getLogger(HelloServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ByeServiceImpl.class);
 
     @Override
     public void bye(ByeRequest request, StreamObserver<ByeResponse> responseObserver) {
