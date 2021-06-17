@@ -1,0 +1,53 @@
+Configuration:
+  status: warn
+  name: Default
+  monitorInterval: 5
+
+  Properties:
+    Property:
+    - name: log-path
+      value: logs
+    - name: log-name
+      value: hello-world-client
+
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}] %msg%n"
+    File:
+      name: File_Appender
+      fileName: ${log-path}/${log-name}.err
+      PatternLayout:
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}] %msg%n"
+
+    RollingFile:
+      name: RollingFile_Appender
+      fileName: ${log-path}/${log-name}.log
+      filePattern: "${log-path}/${log-name}.log.%d{yyyy-MM-dd-hh-mm}.gz"
+      PatternLayout:
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}] %msg%n"
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 1 KB
+      DefaultRollOverStrategy:
+        max: 30
+
+  Loggers:
+    Root:
+      level: debug
+      AppenderRef:
+        ref: Console_Appender
+
+    Logger:
+      name: org.example.hello.world
+      additivity: false
+      level: debug
+      AppenderRef:
+      - ref: Console_Appender
+        level: info
+      - ref: File_Appender
+        level: error
+      - ref: RollingFile_Appender
+        level: debug
