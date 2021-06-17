@@ -34,7 +34,7 @@ public class HelloServiceImpl extends HelloServiceImplBase {
     public void sayHelloAgain(HelloRequest request, StreamObserver<HelloResponse> responseObserver) {
         logger.info("Request received from client: {}", request);
 
-        String greeting = new StringBuilder().append("Hello, ")
+        String greeting = new StringBuilder().append("Hello Again, ")
             .append(request.getFirstName())
             .append(" ")
             .append(request.getLastName())

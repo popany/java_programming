@@ -38,7 +38,7 @@ public class GoodbyeServiceImpl extends GoodbyeServiceImplBase{
         logger.info("Request received from client: {}", request);
 
         String greeting = new StringBuilder()
-            .append("Goodbye, ")
+            .append("Goodbye Again, ")
             .append(request.getFirstName())
             .append(" ")
             .append(request.getLastName())

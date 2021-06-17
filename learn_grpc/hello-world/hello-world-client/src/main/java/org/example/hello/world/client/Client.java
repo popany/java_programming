@@ -55,6 +55,24 @@ public class Client {
         channel.shutdown();
     }
 
+    private void sayHelloAgain() {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
+            .usePlaintext()
+            .build();
+
+        HelloServiceGrpc.HelloServiceBlockingStub stub = HelloServiceGrpc.newBlockingStub(channel);
+
+
+        HelloResponse helloResponse = stub.sayHelloAgain(HelloRequest.newBuilder()
+            .setFirstName("Foo")
+            .setLastName("Bar")
+            .build());
+
+        logger.info("Response received from server:{}", helloResponse);
+
+        channel.shutdown();
+    }
+
     private void sayGoodbye() {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
             .usePlaintext()
@@ -64,6 +82,24 @@ public class Client {
 
 
         GoodbyeResponse goodbyeResponse = stub.sayGoodbye(GoodbyeRequest.newBuilder()
+            .setFirstName("Foo")
+            .setLastName("Bar")
+            .build());
+
+        logger.info("Response received from server:{}", goodbyeResponse);
+
+        channel.shutdown();
+    }
+
+    private void sayGoodbyeAgain() {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
+            .usePlaintext()
+            .build();
+
+        GoodbyeServiceGrpc.GoodbyeServiceBlockingStub stub = GoodbyeServiceGrpc.newBlockingStub(channel);
+
+
+        GoodbyeResponse goodbyeResponse = stub.sayGoodbyeAgain(GoodbyeRequest.newBuilder()
             .setFirstName("Foo")
             .setLastName("Bar")
             .build());
@@ -87,6 +123,8 @@ public class Client {
 
             sayHello();
             sayGoodbye();
+            sayHelloAgain();
+            sayGoodbyeAgain();
                 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
