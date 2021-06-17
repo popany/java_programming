@@ -30,15 +30,18 @@ Configuration:
         Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level][%t][%c{1}:%line] %msg%n"
       Policies:
         SizeBasedTriggeringPolicy:
-          size: 1 KB
+          size: 1 MB
       DefaultRollOverStrategy:
         max: 30
 
   Loggers:
     Root:
-      level: debug
+      level: info
       AppenderRef:
-        ref: Console_Appender
+      - ref: Console_Appender
+        level: info 
+      - ref: RollingFile_Appender
+        level: info
 
     Logger:
       name: org.example.hello.world
@@ -46,7 +49,7 @@ Configuration:
       level: debug
       AppenderRef:
       - ref: Console_Appender
-        level: info
+        level: debug
       - ref: File_Appender
         level: error
       - ref: RollingFile_Appender
