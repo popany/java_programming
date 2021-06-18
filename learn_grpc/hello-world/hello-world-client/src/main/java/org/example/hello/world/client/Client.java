@@ -1,17 +1,15 @@
 package org.example.hello.world.client;
 
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import javax.annotation.PostConstruct;
 
 import org.example.hello.world.client.config.ClientConfig;
 import org.example.hello.world.common.Constants;
 import org.example.hello.world.common.Stopper;
 import org.example.hello.world.common.utils.PropertyUtils;
-import org.example.hello.world.grpc.GoodbyeServiceGrpc;
-import org.example.hello.world.grpc.GoodbyeRequest;
-import org.example.hello.world.grpc.GoodbyeResponse;
-import org.example.hello.world.grpc.HelloServiceGrpc;
-import org.example.hello.world.grpc.HelloRequest;
-import org.example.hello.world.grpc.HelloResponse;
+import org.example.hello.world.common.utils.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,84 +30,12 @@ public class Client {
     @Autowired(required = true)
     private ClientConfig clientConfig;
 
+    private ThreadPoolExecutor threadPoolExecutor;
+
     public static void main(String[] args) {
         Thread.currentThread().setName(Constants.THREAD_NAME_CLIENT);
         new SpringApplicationBuilder(Client.class).web(WebApplicationType.NONE).run(args);
     }
-
-    private void sayHello() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
-            .usePlaintext()
-            .build();
-
-        HelloServiceGrpc.HelloServiceBlockingStub stub = HelloServiceGrpc.newBlockingStub(channel);
-
-
-        HelloResponse helloResponse = stub.sayHello(HelloRequest.newBuilder()
-            .setFirstName("Foo")
-            .setLastName("Bar")
-            .build());
-
-        logger.info("Response received from server:{}", helloResponse);
-
-        channel.shutdown();
-    }
-
-    private void sayHelloAgain() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
-            .usePlaintext()
-            .build();
-
-        HelloServiceGrpc.HelloServiceBlockingStub stub = HelloServiceGrpc.newBlockingStub(channel);
-
-
-        HelloResponse helloResponse = stub.sayHelloAgain(HelloRequest.newBuilder()
-            .setFirstName("Foo")
-            .setLastName("Bar")
-            .build());
-
-        logger.info("Response received from server:{}", helloResponse);
-
-        channel.shutdown();
-    }
-
-    private void sayGoodbye() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
-            .usePlaintext()
-            .build();
-
-        GoodbyeServiceGrpc.GoodbyeServiceBlockingStub stub = GoodbyeServiceGrpc.newBlockingStub(channel);
-
-
-        GoodbyeResponse goodbyeResponse = stub.sayGoodbye(GoodbyeRequest.newBuilder()
-            .setFirstName("Foo")
-            .setLastName("Bar")
-            .build());
-
-        logger.info("Response received from server:{}", goodbyeResponse);
-
-        channel.shutdown();
-    }
-
-    private void sayGoodbyeAgain() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
-            .usePlaintext()
-            .build();
-
-        GoodbyeServiceGrpc.GoodbyeServiceBlockingStub stub = GoodbyeServiceGrpc.newBlockingStub(channel);
-
-
-        GoodbyeResponse goodbyeResponse = stub.sayGoodbyeAgain(GoodbyeRequest.newBuilder()
-            .setFirstName("Foo")
-            .setLastName("Bar")
-            .build());
-
-        logger.info("Response received from server:{}", goodbyeResponse);
-
-        channel.shutdown();
-    }
-
-
 
     @PostConstruct
     public void run() {
@@ -121,11 +47,34 @@ public class Client {
                 }
             }));
 
-            sayHello();
-            sayGoodbye();
-            sayHelloAgain();
-            sayGoodbyeAgain();
-                
+            ManagedChannel channel = ManagedChannelBuilder.forAddress(clientConfig.getGrpcServerHost(), clientConfig.getGrpcServerPort())
+                .usePlaintext()
+                .build();
+
+            HelloClient helloClient = new HelloClient(channel);
+            helloClient.sayHello();
+            helloClient.sayHelloAgain();
+
+            GoodbyeClient goodbyeClient = new GoodbyeClient(channel);
+            goodbyeClient.sayGoodbye();
+            goodbyeClient.sayGoodbyeAgain();
+
+            threadPoolExecutor = ThreadUtils.newDaemonFixedThreadPool(clientConfig.getGrpcClientThreadpoolsize(), Constants.THREAD_NAME_PREFIX_GRPC_CLIENT);
+
+            ChatClient chatClient = new ChatClient(channel, threadPoolExecutor);
+            chatClient.blockingGreet();
+            chatClient.blockingListen();
+
+            chatClient.futureGreet();
+
+            chatClient.asyncGreet();
+            chatClient.asyncListen();
+            chatClient.asyncSpeak();
+            chatClient.asyncTalk();
+            ThreadUtils.sleep(3000);
+
+            channel.shutdown();
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -143,6 +92,11 @@ public class Client {
 
             // set stop signal is true
             Stopper.stop();
+
+            if (threadPoolExecutor != null) {
+                threadPoolExecutor.shutdown();
+                threadPoolExecutor.awaitTermination(5, TimeUnit.SECONDS);
+            }
 
             try {
                 //thread sleep 3 seconds for thread quietly stop

@@ -16,4 +16,7 @@ public class ClientConfig {
 
     @Value("${grpc.server.prot:50008}")
     private int grpcServerPort;
+
+    @Value("${grpc.client.threadpoolsize:10}")
+    private int grpcClientThreadpoolsize;
 }

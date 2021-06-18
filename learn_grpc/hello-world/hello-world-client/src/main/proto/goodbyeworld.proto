@@ -12,6 +12,6 @@ message GoodbyeResponse {
 }
 
 service GoodbyeService {
-    rpc sayGoodbye(GoodbyeRequest) returns (GoodbyeResponse);
+    rpc sayGoodbye(GoodbyeRequest) returns (GoodbyeResponse) {}
     rpc sayGoodbyeAgain(GoodbyeRequest) returns (GoodbyeResponse) {}
 }

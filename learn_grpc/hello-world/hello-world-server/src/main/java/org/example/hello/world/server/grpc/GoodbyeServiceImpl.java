@@ -14,7 +14,6 @@ public class GoodbyeServiceImpl extends GoodbyeServiceImplBase{
 
     @Override
     public void sayGoodbye(GoodbyeRequest request, StreamObserver<GoodbyeResponse> responseObserver) {
-
         logger.info("Request received from client: {}", request);
 
         String greeting = new StringBuilder()
@@ -51,7 +50,5 @@ public class GoodbyeServiceImpl extends GoodbyeServiceImplBase{
         responseObserver.onNext(goodbyeResponse);
         responseObserver.onCompleted();  
     }
-
-
 
 }
